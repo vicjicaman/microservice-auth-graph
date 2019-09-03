@@ -6,7 +6,6 @@
   "repository": "git@github.com:vicjicaman/microservice-auth-graph.git",
   "author": "Victor Jimenez <vic.jicama@gmail.com>",
   "license": "MIT",
-  "private": true,
   "dependencies": {
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
