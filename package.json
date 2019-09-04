@@ -1,6 +1,6 @@
 {
   "name": "@nebulario/microservice-auth-graph",
-  "version": "1.70.0-master",
+  "version": "1.70.1-auth-stateful-prod",
   "description": "GraphQL api for auth",
   "main": "src/index.js",
   "repository": "git@github.com:vicjicaman/microservice-auth-graph.git",
