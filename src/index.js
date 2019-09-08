@@ -13,7 +13,8 @@ var {
 
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://microservice-auth-data.auth-stateful-microservices-namespace:27017/auth', {
+//microservice-auth-data.auth-stateful-microservices-namespace:27017
+mongoose.connect('mongodb://' + process.env['URL_DATA'] + ':' + process.env['PORT_DATA'] + '/auth', {
   useNewUrlParser: true
 });
 
@@ -26,11 +27,11 @@ const schema = makeExecutableSchema({
 });
 
 var app = express();
-app.use(process.env['SERVICE_URL_PATH_GRAPHQL'], express_graphql({
+app.use(process.env['PATH_URL_GRAPH'], express_graphql({
   schema: schema,
   graphiql: true
 }));
-app.listen(process.env['SERVICE_PORT'], () => console.log('Auth GraphQL running...'));
+app.listen(process.env['PORT'], () => console.log('Auth GraphQL running...'));
 
 
 function shutdown(signal) {
