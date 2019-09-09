@@ -10,16 +10,17 @@ var {
   resolvers: rootResolvers
 } = require('./schema');
 
+const INTERNAL_HOST_DATA = process.env['INTERNAL_HOST_DATA'];
+const INTERNAL_PORT_DATA = process.env['INTERNAL_PORT_DATA'];
+const ROUTE_GRAPH = process.env['ROUTE_GRAPH'];
+const INTERNAL_PORT_GRAPH = process.env['INTERNAL_PORT_GRAPH'];
 
 const mongoose = require('mongoose');
 
 //microservice-auth-data.auth-stateful-microservices-namespace:27017
-mongoose.connect('mongodb://' + process.env['URL_DATA'] + ':' + process.env['PORT_DATA'] + '/auth', {
+mongoose.connect('mongodb://' + INTERNAL_HOST_DATA + ':' + INTERNAL_PORT_DATA + '/auth', {
   useNewUrlParser: true
 });
-
-console.log("DATA_CONNECTED");
-console.log(process.env);
 
 const schema = makeExecutableSchema({
   typeDefs: rootSchema,
@@ -27,11 +28,11 @@ const schema = makeExecutableSchema({
 });
 
 var app = express();
-app.use(process.env['PATH_URL_GRAPH'], express_graphql({
+app.use(ROUTE_GRAPH, express_graphql({
   schema: schema,
   graphiql: true
 }));
-app.listen(process.env['PORT'], () => console.log('Auth GraphQL running...'));
+app.listen(INTERNAL_PORT_GRAPH, () => console.log('Auth GraphQL running...'));
 
 
 function shutdown(signal) {
