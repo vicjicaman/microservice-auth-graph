@@ -11,6 +11,16 @@ const schema = [`
 `];
 
 
+const login = (req, user) =>
+  new Promise((resolve, reject) => {
+        req.login(user, function(err) {
+          if (err) {
+            reject(new Error(err))
+          } else {
+            resolve(user);
+          }
+        })(user);
+    })
 
 const authenticate = req =>
   new Promise((resolve, reject) => {
@@ -62,7 +72,8 @@ const resolvers = {
         email,
         password
       });
-      return await added.save();
+      const res = await added.save();
+      return await login(cxt.request, res);
     },
     login: async (root, {
       username,
@@ -75,8 +86,6 @@ const resolvers = {
       };
 
       const res = await authenticate(cxt.request);
-      console.log("UNREACHED")
-
       return res;
     },
     logout: (root, args, cxt) => {

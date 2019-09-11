@@ -14,6 +14,7 @@ const schema = [...Protected.schema,
   scalar Date
 
   type Viewer {
+    id: ID
     username: String
     protected: ProtectedQueries
   }
@@ -34,6 +35,14 @@ const schema = [...Protected.schema,
 `
 ];
 
+const getViewer = (cxt) => {
+  const username = cxt.request.user ? cxt.request.user.username : null;
+  return {
+    id: username,
+    username
+  };
+}
+
 const resolvers = {
   Date: GraphQLDate,
   DateTime: GraphQLDateTime,
@@ -41,13 +50,13 @@ const resolvers = {
   ...Public.resolvers,
   ...Protected.resolvers,
   Viewer: {
-    protected: viewer => viewer
+    protected: viewer => viewer.username ? viewer : null
   },
   Query: {
-    viewer: (parent, args, cxt) => cxt.request.user
+    viewer: (parent, args, cxt) => getViewer(cxt)
   },
   Mutation: {
-    viewer: (parent, args, cxt) => cxt.request.user,
+    viewer: (parent, args, cxt) => getViewer(cxt),
     auth: parent => ({})
   }
 };
