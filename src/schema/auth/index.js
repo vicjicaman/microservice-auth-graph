@@ -1,31 +1,30 @@
-import * as Account from 'Model/account'
-const passport = require('passport')
+import * as Account from "Model/account";
 
-const schema = [`
+const schema = [
+  `
 
   type AuthMutations {
     register(username:String!, email: String!, password: String!): Account
     login(username:String!, password:String!): Account
     logout : Boolean
   }
-`];
+`
+];
 
-
-const login = (req, user) =>
+const login = (passport, req, user) =>
   new Promise((resolve, reject) => {
-        req.login(user, function(err) {
-          if (err) {
-            reject(new Error(err))
-          } else {
-            resolve(user);
-          }
-        })(user);
-    })
+    req.login(user, function(err) {
+      if (err) {
+        reject(new Error(err));
+      } else {
+        resolve(user);
+      }
+    })(user);
+  });
 
-const authenticate = req =>
+const authenticate = (passport, req) =>
   new Promise((resolve, reject) => {
-
-    passport.authenticate('local', function(err, user) {
+    passport.authenticate("local", function(err, user) {
       if (err) {
         reject(new Error(err));
         return;
@@ -36,66 +35,55 @@ const authenticate = req =>
       } else {
         req.login(user, function(err) {
           if (err) {
-            reject(new Error(err))
+            reject(new Error(err));
           } else {
             resolve(user);
           }
-
         });
       }
-    })(req)
-
+    })(req);
   });
-
-
-
-
 
 const resolvers = {
   AuthMutations: {
-    register: async (root, {
-      username,
-      email,
-      password
-    }, cxt) => {
-
-      const curr = await Account.Model.findOne({
-        username
-      });
+    register: async (viewer, { username, email, password }, cxt) => {
+      const curr = await Account.Model.get(
+        viewer,
+        {
+          username
+        },
+        cxt
+      );
 
       if (curr) {
         throw new Error("USER_EXISTS");
       }
 
-      const added = new Account.Model({
-        username,
-        email,
-        password
-      });
-      const res = await added.save();
-      return await login(cxt.request, res);
+      const registered = await Account.Model.register(
+        viewer,
+        {
+          username,
+          email,
+          password
+        },
+        cxt
+      );
+      return await login(cxt.passport, cxt.request, registered);
     },
-    login: async (root, {
-      username,
-      password
-    }, cxt) => {
-
+    login: async (root, { username, password }, cxt) => {
       cxt.request.body = {
         username,
         password
       };
 
-      const res = await authenticate(cxt.request);
+      const res = await authenticate(cxt.passport, cxt.request);
       return res;
     },
     logout: (root, args, cxt) => {
-      cxt.request.logout()
+      cxt.request.logout();
       return true;
     }
-  },
+  }
 };
 
-export {
-  schema,
-  resolvers
-}
+export { schema, resolvers };

@@ -1,22 +1,25 @@
-import * as Account from 'Model/account'
+import * as Account from "Model/account";
 
-const schema = [...Account.Schema, `
+const schema = [
+  ...Account.Schema,
+  `
   type AccountQueries {
     get: Account!
   }
-`];
+`
+];
 
 const resolvers = {
   AccountQueries: {
-    get: async ({
-      username
-    }, args, cxt) => await Account.Model.findOne({
-      username
-    })
-  },
+    get: async (viewer, { username }, cxt) =>
+      await Account.Model.get(
+        viewer,
+        {
+          username
+        },
+        cxt
+      )
+  }
 };
 
-export {
-  schema,
-  resolvers
-}
+export { schema, resolvers };
