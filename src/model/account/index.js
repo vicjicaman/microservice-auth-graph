@@ -1,26 +1,60 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs')
+import { request } from "graphql-request";
 
-var ModelSchema = new mongoose.Schema({
-  username: String,
-  name: String,
-  email: String,
-  password: String,
-  created_at: Date
-});
+const ACCOUNT_GET = `query ACCOUNT_GET($username: String!) {
+  viewer {
+    id
+    account {
+      get(username: $username) {
+        id
+        username
+        email
+      }
+    }
+  }
+}`;
 
-ModelSchema.pre('save', async function(next) {
-  const saltRounds = 10
-  const salt = bcrypt.genSaltSync(saltRounds)
-  const passwordHash = bcrypt.hashSync(this.password, salt)
-  this.password = passwordHash;
-  next();
-});
+const ACCOUNT_CREATE = `mutation ACCOUNT_CREATE($username: String!, $email: String!, $password: String!) {
+  viewer {
+    id
+    account {
+      add(username: $username, email: $email, password: $password) {
+        id
+        username
+        email
+      }
+    }
+  }
+}`;
 
-const Model = mongoose.model('Account', ModelSchema);
+const Model = {
+  get: async (viewer, { username }, cxt) => {
+    const {
+      viewer: {
+        account: { get: user }
+      }
+    } = await request(cxt.services.accounts.url, ACCOUNT_GET, {
+      username
+    });
+
+    return user;
+  },
+  register: async (viewer, { username, email, password }, cxt) => {
+    const {
+      viewer: {
+        account: { add:user }
+      }
+    } = await request(cxt.services.accounts.url, ACCOUNT_CREATE, {
+      username,
+      email,
+      password
+    });
+
+    return user;
+  }
+};
 
 const Schema = [
-   `
+  `
   type Account {
     id: ID
     username: String!
@@ -29,9 +63,6 @@ const Schema = [
     created_at: DateTime
   }
   `
-]
+];
 
-export {
-  Schema,
-  Model
-}
+export { Schema, Model };
