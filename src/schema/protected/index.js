@@ -1,25 +1,28 @@
-import * as Account from './account';
+import * as Account from "./account";
 
-const schema = [...Account.schema,`
+const schema = [
+  ...Account.schema,
+  `
 
   type ProtectedQueries {
     account: AccountQueries
   }
 
   type ProtectedMutations {
-    dummy: String
+    account: AccountMutations
   }
 
-`];
+`
+];
 
 const resolvers = {
   ...Account.resolvers,
   ProtectedQueries: {
     account: async viewer => viewer
+  },
+  ProtectedMutations: {
+    account: async viewer => viewer
   }
 };
 
-export {
-  schema,
-  resolvers
-}
+export { schema, resolvers };

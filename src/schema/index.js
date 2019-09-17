@@ -52,6 +52,9 @@ const resolvers = {
   Viewer: {
     protected: viewer => viewer.username ? viewer : null
   },
+  ViewerMutations: {
+    protected: viewer => viewer.username ? viewer : null
+  },
   Query: {
     viewer: (parent, args, cxt) => getViewer(cxt)
   },
