@@ -671,20 +671,9 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@nebulario/microservice-auth-common@1.70.0-master":
-  version "1.70.0-master"
-  resolved "https://registry.yarnpkg.com/@nebulario/microservice-auth-common/-/microservice-auth-common-1.70.0-master.tgz#cc86b7c23455fa5e24f9baa94fdbce05c8f4b93c"
-  integrity sha512-oNhRDnso7bXGn4spLP+97KRT1E2+yhd5URM30uE/X22sbOhbd8GNNzj0DC/4g268GoTdqsF4VtwFu9BjkHWZxQ==
-  dependencies:
-    "@babel/runtime" "^7.6.0"
-    "@babel/runtime-corejs3" "^7.6.0"
-    connect-redis "^4.0.2"
-    express-session "^1.16.2"
-    graphql-request "^1.8.2"
-    passport "^0.4.0"
-    passport-local "^1.0.0"
-    redis "^2.8.0"
-    redis-parser "^3.0.0"
+"@nebulario/microservice-auth-common@link:../microservice-auth-common":
+  version "0.0.0"
+  uid ""
 
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
