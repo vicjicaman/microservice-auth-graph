@@ -8,6 +8,7 @@ const ACCOUNT_GET = `query ACCOUNT_GET($username: String!) {
         id
         username
         email
+        created_at
       }
     }
   }
@@ -17,7 +18,7 @@ const ACCOUNT_CREATE = `mutation ACCOUNT_CREATE($username: String!, $email: Stri
   viewer {
     id
     account {
-      add(username: $username, email: $email, password: $password) {
+      create(username: $username, email: $email, password: $password) {
         id
         username
         email
@@ -26,8 +27,19 @@ const ACCOUNT_CREATE = `mutation ACCOUNT_CREATE($username: String!, $email: Stri
   }
 }`;
 
+
+const ACCOUNT_DELETE = `mutation ACCOUNT_DELETE($username: String!) {
+  viewer {
+    id
+    account {
+      delete(username: $username)
+    }
+  }
+}`;
+
 const Model = {
   get: async (viewer, { username }, cxt) => {
+
     const {
       viewer: {
         account: { get: user }
@@ -41,7 +53,7 @@ const Model = {
   register: async (viewer, { username, email, password }, cxt) => {
     const {
       viewer: {
-        account: { add:user }
+        account: { create: user }
       }
     } = await request(cxt.services.accounts.url, ACCOUNT_CREATE, {
       username,
@@ -50,6 +62,21 @@ const Model = {
     });
 
     return user;
+  },
+  unregister: async ({ username }, args, cxt) => {
+    if (!username) {
+      throw new Error("NO_AUTH_USER");
+    }
+
+    const {
+      viewer: {
+        account: { delete: delres }
+      }
+    } = await request(cxt.services.accounts.url, ACCOUNT_DELETE, {
+      username
+    });
+
+    return delres;
   }
 };
 
