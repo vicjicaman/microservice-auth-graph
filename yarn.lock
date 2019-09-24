@@ -686,6 +686,14 @@
     redis "^2.8.0"
     redis-parser "^3.0.0"
 
+"@nebulario/microservice-utils@^1.70.0-master":
+  version "1.70.0-master"
+  resolved "https://registry.yarnpkg.com/@nebulario/microservice-utils/-/microservice-utils-1.70.0-master.tgz#0a477aea686f3779d8fb85deb2cb785520ee966f"
+  integrity sha512-Qm1E2iMtabHiCuEDlbgxpG5s2ujTnUJvvMRu4lf4nH/Ut/JCVwsdMJ1VVz3d/4zgT8QFkDKFnlxkF1h8pFakSA==
+  dependencies:
+    "@babel/runtime" "^7.6.0"
+    "@babel/runtime-corejs3" "^7.6.0"
+
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.8.5.tgz#51b1c5fe6576a34953bf4b253df9f0d490d9e359"

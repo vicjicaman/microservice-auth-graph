@@ -10,6 +10,7 @@
     "@babel/runtime": "^7.6.0",
     "@babel/runtime-corejs3": "^7.6.0",
     "@nebulario/microservice-auth-common": "1.70.1-master",
+    "@nebulario/microservice-utils": "^1.70.0-master",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
     "express-graphql": "^0.7.1",
