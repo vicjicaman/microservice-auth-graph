@@ -1,13 +1,12 @@
 import * as Auth from './auth';
-import * as Protected from './protected';
-import * as Public from './public';
+import * as Account from './account';
+
 const {
   GraphQLDate,
   GraphQLDateTime
 } = require('graphql-iso-date');
 
-const schema = [...Protected.schema,
-  ...Public.schema,
+const schema = [...Account.schema,
   ...Auth.schema,
   `
   scalar DateTime
@@ -16,12 +15,13 @@ const schema = [...Protected.schema,
   type Viewer {
     id: ID
     username: String
-    protected: ProtectedQueries
+    account: AccountQueries
   }
 
   type ViewerMutations {
+    id: ID
     username: String
-    protected: ProtectedMutations
+    account: AccountMutations
   }
 
   type Query {
@@ -47,13 +47,12 @@ const resolvers = {
   Date: GraphQLDate,
   DateTime: GraphQLDateTime,
   ...Auth.resolvers,
-  ...Public.resolvers,
-  ...Protected.resolvers,
+  ...Account.resolvers,
   Viewer: {
-    protected: viewer => viewer.username ? viewer : null
+    account: viewer => viewer.username ? viewer : null
   },
   ViewerMutations: {
-    protected: viewer => viewer.username ? viewer : null
+    account: viewer => viewer.username ? viewer : null
   },
   Query: {
     viewer: (parent, args, cxt) => getViewer(cxt)
