@@ -1,95 +1,110 @@
-import { request } from "graphql-request";
+import * as AccountApi from "Api/account";
+import * as AuthApi from "Api/auth";
+import * as GraphCommon from "@nebulario/microservice-graph-common";
+import * as TokenApi from "PKG/microservice-token";
+import * as EmailModel from "Model/email";
 
-const ACCOUNT_GET = `query ACCOUNT_GET($username: String!) {
-  viewer {
-    id
-    account {
-      get(username: $username) {
-        id
-        username
-        email
-        created_at
-      }
-    }
+export const get = async (username, cxt) => {
+  return await AccountApi.get(username, cxt);
+};
+
+export const register = async ({ username, email, password }, cxt) => {
+  const curr = await AccountApi.get(username, cxt);
+
+  if (curr) {
+    throw new Error("account.exists");
   }
-}`;
 
-const ACCOUNT_CREATE = `mutation ACCOUNT_CREATE($username: String!, $email: String!, $password: String!) {
-  viewer {
-    id
-    account {
-      create(username: $username, email: $email, password: $password) {
-        id
-        username
-        email
-      }
-    }
-  }
-}`;
+  const token = await TokenApi.create(
+    { type: "validation", user: { username, email } },
+    cxt
+  );
 
+  try {
+    const user = await AccountApi.create({ username, email, password }, cxt);
+    await AuthApi.login(user, cxt);
 
-const ACCOUNT_DELETE = `mutation ACCOUNT_DELETE($username: String!) {
-  viewer {
-    id
-    account {
-      delete(username: $username)
-    }
-  }
-}`;
+    cxt.logger.debug("auth.register.token", { username, token });
 
-const Model = {
-  get: async (viewer, { username }, cxt) => {
+    const emailOpts = {
+      from: "Repoflow validation <no-reply@repoflow.com>",
+      to: email,
+      subject: "Repoflow Blog validation",
+      generateTextFromHTML: true,
+      html:
+        '<html><body><p>To validate your account click on the next link: <a href="https://blog.repoflow.com/auth/backend/validate?token=' +
+        token +
+        '" >validate</a> </p> <p>Or go to https://blog.repoflow.com/auth and use the next token:<br/>' +
+        token +
+        "</p></body></html>",
+      text:
+        "To validate your account go to https://blog.repoflow.com/auth and use the next token:\n" +
+        token
+    };
 
-    const {
-      viewer: {
-        account: { get: user }
-      }
-    } = await request(cxt.services.accounts.url, ACCOUNT_GET, {
-      username
-    });
-
+    await EmailModel.send(emailOpts, cxt);
     return user;
-  },
-  register: async (viewer, { username, email, password }, cxt) => {
-    const {
-      viewer: {
-        account: { create: user }
-      }
-    } = await request(cxt.services.accounts.url, ACCOUNT_CREATE, {
-      username,
-      email,
-      password
-    });
-
-    return user;
-  },
-  unregister: async ({ username }, args, cxt) => {
-    if (!username) {
-      throw new Error("NO_AUTH_USER");
-    }
-
-    const {
-      viewer: {
-        account: { delete: delres }
-      }
-    } = await request(cxt.services.accounts.url, ACCOUNT_DELETE, {
-      username
-    });
-
-    return delres;
+  } catch (e) {
+    cxt.logger.error("auth.create.error", { username, error: e.toString() });
+    throw new Error("account.issue.exists");
   }
 };
 
-const Schema = [
-  `
-  type Account {
-    id: ID
-    username: String!
-    name: String
-    email: String!
-    created_at: DateTime
-  }
-  `
-];
+export const validate = async (viewer, token, cxt) => {
+  const payload = await TokenApi.decrypt(token, cxt);
+  cxt.logger.debug("auth.validate", { token, payload });
 
-export { Schema, Model };
+  if (payload) {
+    const { type, user } = payload;
+    if (type === "validation") {
+      await GraphCommon.Queue.sendPayload(
+        cxt.services.queue,
+        cxt.services.events.queue,
+        {
+          event: "register",
+          user: { username: user.username, email: user.email }
+        },
+        {},
+        cxt
+      );
+
+      const valAccount = await AccountApi.get(user.username, cxt);
+      await AccountApi.update(valAccount, { status: "active" }, cxt);
+
+      return viewer;
+    }
+  }
+
+  throw new Error("auth.invalid.token");
+};
+
+export const unregister = async (viewer, cxt) => {
+  if (!viewer) {
+    throw new Error("auth.viewer");
+  }
+
+  const { username } = viewer;
+
+  await GraphCommon.Queue.sendPayload(
+    cxt.services.queue,
+    cxt.services.events.queue,
+    {
+      event: "unregister",
+      user: { username }
+    },
+    {},
+    cxt
+  );
+
+  await AuthApi.logout(cxt);
+  return await AccountApi.remove(username, cxt);
+};
+
+export const login = async cxt => {
+  cxt.logger.debug("login");
+  return await AuthApi.authenticate(cxt);
+};
+
+export const logout = async cxt => {
+  return await AuthApi.logout(cxt);
+};
