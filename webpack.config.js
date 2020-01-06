@@ -19,8 +19,10 @@ module.exports = {
   },
   resolve: {
     alias: {
+      Api: path.resolve(__dirname, 'src/api'),
       Model: path.resolve(__dirname, 'src/model'),
-      Schema: path.resolve(__dirname, 'src/schema')
+      Schema: path.resolve(__dirname, 'src/schema'),
+      PKG: path.resolve(__dirname, 'pkg')
     },
     modules: [
       path.resolve(__dirname, 'src'),

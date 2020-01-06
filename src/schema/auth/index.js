@@ -11,77 +11,20 @@ const schema = [
 `
 ];
 
-const login = (passport, req, user) =>
-  new Promise((resolve, reject) => {
-    req.login(user, function(err) {
-      if (err) {
-        reject(new Error(err));
-      } else {
-        resolve(user);
-      }
-    })(user);
-  });
-
-const authenticate = (passport, req) =>
-  new Promise((resolve, reject) => {
-    passport.authenticate("local", function(err, user) {
-      if (err) {
-        reject(new Error(err));
-        return;
-      }
-
-      if (!user) {
-        resolve(null);
-      } else {
-        req.login(user, function(err) {
-          if (err) {
-            reject(new Error(err));
-          } else {
-            resolve(user);
-          }
-        });
-      }
-    })(req);
-  });
-
 const resolvers = {
   AuthMutations: {
-    register: async (viewer, { username, email, password }, cxt) => {
-      const curr = await Account.Model.get(
-        viewer,
-        {
-          username
-        },
-        cxt
-      );
-
-      if (curr) {
-        throw new Error("USER_EXISTS");
-      }
-
-      const registered = await Account.Model.register(
-        viewer,
-        {
-          username,
-          email,
-          password
-        },
-        cxt
-      );
-      return await login(cxt.passport, cxt.request, registered);
-    },
+    register: async (viewer, { username, password, email }, cxt) =>
+      await Account.register({ username, password, email }, cxt),
     login: async (root, { username, password }, cxt) => {
       cxt.request.body = {
         username,
         password
       };
 
-      const res = await authenticate(cxt.passport, cxt.request);
-      return res;
+      return await Account.login(cxt);
     },
     logout: (root, args, cxt) => {
-      cxt.request.logout();
-      return true;
+      return Account.logout(cxt);
     }
   }
 };

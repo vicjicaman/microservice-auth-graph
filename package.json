@@ -9,18 +9,22 @@
   "dependencies": {
     "@babel/runtime": "^7.6.0",
     "@babel/runtime-corejs3": "^7.6.0",
+    "@nebulario/microservice-graph-common": "1.70.3-master",
     "@nebulario/microservice-auth-common": "1.70.1-master",
     "@nebulario/microservice-utils": "1.70.0-master",
     "@nebulario/microservice-logger": "1.70.0-master",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
     "express-graphql": "^0.7.1",
+    "googleapis": "^46.0.0",
     "graphql": "^14.2.0",
     "graphql-iso-date": "^3.6.1",
     "graphql-request": "^1.8.2",
     "graphql-tools": "^4.0.4",
     "graphql-tools-types": "^1.2.1",
-    "mongoose": "^5.6.12"
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.6.12",
+    "nodemailer": "^6.4.2"
   },
   "scripts": {
     "clean": "rm -Rf ./dist*",
