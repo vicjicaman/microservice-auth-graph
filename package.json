@@ -9,10 +9,10 @@
   "dependencies": {
     "@babel/runtime": "^7.6.0",
     "@babel/runtime-corejs3": "^7.6.0",
-    "@nebulario/microservice-graph-common": "1.70.3-master",
-    "@nebulario/microservice-auth-common": "1.70.1-master",
+    "@nebulario/microservice-graph-common": "link:./../microservice-graph-common",
+    "@nebulario/microservice-auth-common": "link:./../microservice-auth-common",
     "@nebulario/microservice-utils": "1.70.0-master",
-    "@nebulario/microservice-logger": "1.70.0-master",
+    "@nebulario/microservice-logger": "1.70.1-master",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
     "express-graphql": "^0.7.1",

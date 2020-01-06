@@ -1,7 +1,7 @@
 import * as AccountApi from "Api/account";
 import * as AuthApi from "Api/auth";
-import * as GraphCommon from "@nebulario/linker-graph-common";
-import * as TokenApi from "PKG/linker-token";
+import * as GraphCommon from "@nebulario/microservice-graph-common";
+import * as TokenApi from "PKG/microservice-token";
 import * as EmailModel from "Model/email";
 
 export const get = async (username, cxt) => {
@@ -32,13 +32,13 @@ export const register = async ({ username, email, password }, cxt) => {
       subject: "Repoflow Linker validation",
       generateTextFromHTML: true,
       html:
-        '<html><body><p>To validate your account click on the next link: <a href="https://linker.repoflow.com/auth/backend/validate?token=' +
+        '<html><body><p>To validate your account click on the next link: <a href="https://blog.repoflow.com/auth/backend/validate?token=' +
         token +
-        '" >validate</a> </p> <p>Or go to https://linker.repoflow.com/auth and use the next token:<br/>' +
+        '" >validate</a> </p> <p>Or go to https://blog.repoflow.com/auth and use the next token:<br/>' +
         token +
         "</p></body></html>",
       text:
-        "To validate your account go to https://linker.repoflow.com/auth and use the next token:\n" +
+        "To validate your account go to https://blog.repoflow.com/auth and use the next token:\n" +
         token
     };
 

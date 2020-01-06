@@ -9,8 +9,14 @@ import * as AuthLib from "@nebulario/microservice-auth-common";
 import * as Utils from "@nebulario/microservice-utils";
 import * as Logger from "@nebulario/microservice-logger";
 
+import * as AccountModel from "Model/account";
+import * as EmailModel from "Model/email";
+
 const ENV_MODE = process.env["ENV_MODE"];
 const ENV_LOG_FOLDER = process.env["ENV_LOG_FOLDER"];
+
+const AUTH_TOKEN_PRIVATE = process.env["AUTH_TOKEN_PRIVATE"];
+const AUTH_TOKEN_PUBLIC = process.env["AUTH_TOKEN_PUBLIC"];
 
 const ACCOUNT_INTERNAL_URL_GRAPH = process.env["ACCOUNT_INTERNAL_URL_GRAPH"];
 const AUTH_CACHE_INTERNAL_HOST = process.env["AUTH_CACHE_INTERNAL_HOST"];
