@@ -29,7 +29,7 @@ export const register = async ({ username, email, password }, cxt) => {
     const emailOpts = {
       from: "Repoflow validation <no-reply@repoflow.com>",
       to: email,
-      subject: "Repoflow Linker validation",
+      subject: "Repoflow Blog validation",
       generateTextFromHTML: true,
       html:
         '<html><body><p>To validate your account click on the next link: <a href="https://blog.repoflow.com/auth/backend/validate?token=' +
