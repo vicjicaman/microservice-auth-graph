@@ -671,18 +671,39 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@nebulario/microservice-auth-common@link:../microservice-auth-common":
-  version "0.0.0"
-  uid ""
+"@nebulario/microservice-auth-common@1.70.1-auth-linker-update-prod":
+  version "1.70.1-auth-linker-update-prod"
+  resolved "https://registry.yarnpkg.com/@nebulario/microservice-auth-common/-/microservice-auth-common-1.70.1-auth-linker-update-prod.tgz#4576d5d0faa011ec27b308c92ade0618dfb6a275"
+  integrity sha512-9b06SID26wyjjhp4fXg5nrFjtyqAVCV/MfOIgAFsTj9E+V36puYFrObYaJz4TOOdz38FCdcA/q2XaAxqQSUCaQ==
+  dependencies:
+    "@babel/runtime" "^7.6.0"
+    "@babel/runtime-corejs3" "^7.6.0"
+    connect-redis "^4.0.2"
+    express-session "^1.16.2"
+    graphql-request "^1.8.2"
+    passport "^0.4.0"
+    passport-local "^1.0.0"
+    redis "^2.8.0"
+    redis-parser "^3.0.0"
 
-"@nebulario/microservice-graph-common@link:../microservice-graph-common":
-  version "0.0.0"
-  uid ""
+"@nebulario/microservice-graph-common@1.70.1-auth-linker-update-prod":
+  version "1.70.1-auth-linker-update-prod"
+  resolved "https://registry.yarnpkg.com/@nebulario/microservice-graph-common/-/microservice-graph-common-1.70.1-auth-linker-update-prod.tgz#9d78871b6990ac710dcfe93cb87d8afd9658994b"
+  integrity sha512-oeJgaX9S7gmK0FT4xxacFir3bKJojk2LHR5rKz+kKkXPKdMlmBk+godUxr8bDnzTYKlZwSBsvx2qyWPKSzkU7Q==
+  dependencies:
+    "@babel/runtime" "^7.6.0"
+    "@babel/runtime-corejs3" "^7.6.0"
+    "@nebulario/microservice-utils" "1.70.0-master"
+    amqplib "^0.5.5"
+    async-redis "^1.1.7"
+    redis "^2.8.0"
+    redis-lock "^0.1.4"
+    uuid "^3.3.3"
 
-"@nebulario/microservice-logger@1.70.0-master":
-  version "1.70.0-master"
-  resolved "https://registry.yarnpkg.com/@nebulario/microservice-logger/-/microservice-logger-1.70.0-master.tgz#559ead19b4c7226fd93a760fbe61318b2fb5ff8c"
-  integrity sha512-C/etoY63MEUh45A37QgTxxDSoetYKSHDiGMAYnPyPQ9RDJuXhubXfSsKSv6ujZXrI+4QyNjeW829bkxffBk5yQ==
+"@nebulario/microservice-logger@1.70.1-master":
+  version "1.70.1-master"
+  resolved "https://registry.yarnpkg.com/@nebulario/microservice-logger/-/microservice-logger-1.70.1-master.tgz#c56c0124d8138aa663da201fb29f6a0391fdf64c"
+  integrity sha512-Fih2Ei97NRAj8TMbWBkE9eVjbZp2hpJGvBWA3ePDuztpTCSrK0UAADvt0SsVxUTmmmN/ho+v9hxP65Ja8nwqxA==
   dependencies:
     "@babel/runtime" "^7.6.0"
     "@babel/runtime-corejs3" "^7.6.0"
