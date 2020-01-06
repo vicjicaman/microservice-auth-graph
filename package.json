@@ -1,6 +1,6 @@
 {
   "name": "@nebulario/microservice-auth-graph",
-  "version": "1.70.1-auth-linker-update-prod",
+  "version": "1.70.9-master",
   "description": "GraphQL api for auth",
   "main": "src/index.js",
   "repository": "github.com:vicjicaman/microservice-auth-graph.git",
@@ -9,8 +9,8 @@
   "dependencies": {
     "@babel/runtime": "^7.6.0",
     "@babel/runtime-corejs3": "^7.6.0",
-    "@nebulario/microservice-graph-common": "1.70.1-auth-linker-update-prod",
-    "@nebulario/microservice-auth-common": "1.70.1-auth-linker-update-prod",
+    "@nebulario/microservice-graph-common": "1.70.4-master",
+    "@nebulario/microservice-auth-common": "1.70.2-master",
     "@nebulario/microservice-utils": "1.70.0-master",
     "@nebulario/microservice-logger": "1.70.1-master",
     "dotenv": "^7.0.0",
