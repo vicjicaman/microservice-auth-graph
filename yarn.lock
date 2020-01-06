@@ -671,10 +671,10 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@nebulario/microservice-auth-common@1.70.1-auth-linker-update-prod":
-  version "1.70.1-auth-linker-update-prod"
-  resolved "https://registry.yarnpkg.com/@nebulario/microservice-auth-common/-/microservice-auth-common-1.70.1-auth-linker-update-prod.tgz#4576d5d0faa011ec27b308c92ade0618dfb6a275"
-  integrity sha512-9b06SID26wyjjhp4fXg5nrFjtyqAVCV/MfOIgAFsTj9E+V36puYFrObYaJz4TOOdz38FCdcA/q2XaAxqQSUCaQ==
+"@nebulario/microservice-auth-common@1.70.2-master":
+  version "1.70.2-master"
+  resolved "https://registry.yarnpkg.com/@nebulario/microservice-auth-common/-/microservice-auth-common-1.70.2-master.tgz#b43980e9c82da3234c39a88ef47797cddc8a0813"
+  integrity sha512-CdgYPnS+92rSneUxYhCpxG82m49hIZI3eyNkZPDz6IQMwZopzUb2YlL6rIRuXe/7UWtRf7EHVGK4U3bh0t51xw==
   dependencies:
     "@babel/runtime" "^7.6.0"
     "@babel/runtime-corejs3" "^7.6.0"
@@ -686,10 +686,10 @@
     redis "^2.8.0"
     redis-parser "^3.0.0"
 
-"@nebulario/microservice-graph-common@1.70.1-auth-linker-update-prod":
-  version "1.70.1-auth-linker-update-prod"
-  resolved "https://registry.yarnpkg.com/@nebulario/microservice-graph-common/-/microservice-graph-common-1.70.1-auth-linker-update-prod.tgz#9d78871b6990ac710dcfe93cb87d8afd9658994b"
-  integrity sha512-oeJgaX9S7gmK0FT4xxacFir3bKJojk2LHR5rKz+kKkXPKdMlmBk+godUxr8bDnzTYKlZwSBsvx2qyWPKSzkU7Q==
+"@nebulario/microservice-graph-common@1.70.4-master":
+  version "1.70.4-master"
+  resolved "https://registry.yarnpkg.com/@nebulario/microservice-graph-common/-/microservice-graph-common-1.70.4-master.tgz#2bfe94eb59d0d25ef0021dee0159e61087603c5f"
+  integrity sha512-ksJZIQzbh0NER6m5n7FEdxhvDIrIOr1zPB34oeAKZwd7umnoXtEg9cxvf8n1Q9piEosPT3h3TuzxRbydtuGt3Q==
   dependencies:
     "@babel/runtime" "^7.6.0"
     "@babel/runtime-corejs3" "^7.6.0"
